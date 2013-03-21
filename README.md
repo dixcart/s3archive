@@ -6,6 +6,12 @@ Runs as a console application with a single XML file for config.  Designed for c
 
 **NB**: This application uploads data to S3, make sure you are aware of the cost implications and manage your own data retention policies.
 
+##Download binary
+
+<a href="http://itinsurrey.co.uk/assets/files/S3Archive.zip">Download S3Archive</a>
+
+Extract to a folder somewhere and follow instructions.
+
 ##Instructions
 
 Run the file S3Archive.exe once, this will create a default config file and exit.  Modify the xml file to include one `folder` element for each path you wish to send to S3.
