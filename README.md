@@ -6,6 +6,21 @@ Runs as a console application with a single XML file for config.  Designed for c
 
 **NB**: This application uploads data to S3, make sure you are aware of the cost implications and manage your own data retention policies.
 
+##Instructions
+
+Run the file S3Archive.exe once, this will create a default config file and exit.  Modify the xml file to include one `folder` element for each path you wish to send to S3.
+
+###Fields/Attributes
+
+  * `includeOpen` - Will also upload open files, defaults to false as webservers usually have an open file handle on the current log.
+  * `deleteOnUpload` - Deletes file after it has been uploaded, there is currently no verification so use with caution.
+  * `recursive` - Process all subdirectories or just the current.
+  * `path` - The local path to the directory to scan.
+  * `bucket` - The S3 bucket to store in.  Must already be created, currently this is not created for you.
+  * `basePath` - a prepended path to the S3 key for the file to allow you to use a single bucket for multiple sources.
+  * `pattern` - File search pattern to use across all included directories
+
+
 ##License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">S3Archive</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://dixcart.com/it" property="cc:attributionName" rel="cc:attributionURL">Dixcart Technical Solutions Limited</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
