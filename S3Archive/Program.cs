@@ -26,7 +26,8 @@ namespace S3Archive
                             new XAttribute("recursive", true),
                             new XElement("path", "c:\\data\\something"),
                             new XElement("bucket", "my-archive"),
-                            new XElement("basePath", "thisfolder/")
+                            new XElement("basePath", "thisfolder/"),
+                            new XElement("pattern", "*.*")
                         )
                     )
                 )
@@ -80,7 +81,7 @@ namespace S3Archive
 
             //Loop folders
             foreach(var folder in config.Element("root").Descendants("folder")) {
-                string[] files = Directory.GetFiles(folder.Element("path").Value, "*.*", (Convert.ToBoolean(folder.Attribute("recursive").Value)) ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+                string[] files = Directory.GetFiles(folder.Element("path").Value, folder.Element("pattern").Value, (Convert.ToBoolean(folder.Attribute("recursive").Value)) ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
 
                 // Loop through selected files
                 foreach (string file in files)
