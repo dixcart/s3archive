@@ -4,6 +4,7 @@ using Amazon.S3.Model;
 using System;
 using System.IO;
 using System.Xml.Linq;
+using System.Security.Cryptography;
 
 namespace S3Archive
 {
@@ -91,17 +92,28 @@ namespace S3Archive
 
                     try
                     {
+                        bool uploaded = false;                        
                         // If we want to ignore open files, we'll ask for read/write permissions.  Open files will cause an exception.
                         using (Stream stream = new FileStream(file, FileMode.Open, (Convert.ToBoolean(folder.Attribute("includeOpen").Value)) ? FileAccess.Read : FileAccess.ReadWrite))
                         {
+                            //Get MD5 hash for verification later.
+                            var md5 = MD5.Create();
+                            string md5Hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                            md5.Dispose();
+
                             PutObjectRequest request = new PutObjectRequest();
                             request.InputStream = stream;
                             request.Key = S3Path;
                             request.BucketName = folder.Element("bucket").Value;
                             S3Response response = S3Client.PutObject(request);
+                            string eTag = ((PutObjectResponse)response).ETag.Replace("\"", "");
+                            if (md5Hash == eTag) uploaded = true;
+                        }
+                        if (uploaded)
+                        {
+                            if ((Convert.ToBoolean(folder.Attribute("deleteOnUpload").Value))) File.Delete(file);
                             Console.WriteLine("Uploaded: " + file);
                         }
-                        if ((Convert.ToBoolean(folder.Attribute("deleteOnUpload").Value))) File.Delete(file);
                     }
                     catch (Exception e)
                     {
