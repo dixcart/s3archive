@@ -107,6 +107,7 @@ namespace S3Archive
                             request.InputStream = stream;
                             request.Key = S3Path;
                             request.BucketName = folder.Element("bucket").Value;
+                            request.Timeout = -1;
                             S3Response response = S3Client.PutObject(request);
                             string eTag = ((PutObjectResponse)response).ETag.Replace("\"", "");
                             if (md5Hash == eTag) uploaded = true;
