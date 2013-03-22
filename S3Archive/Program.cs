@@ -82,7 +82,9 @@ namespace S3Archive
 
             //Loop folders
             foreach(var folder in config.Element("root").Descendants("folder")) {
+                Console.WriteLine("Reading path: " + folder.Element("path").Value);
                 string[] files = Directory.GetFiles(folder.Element("path").Value, folder.Element("pattern").Value, (Convert.ToBoolean(folder.Attribute("recursive").Value)) ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+                Console.WriteLine("Found " + files.Length + " files to upload");
 
                 // Loop through selected files
                 foreach (string file in files)
