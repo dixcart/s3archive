@@ -8,7 +8,7 @@ Runs as a console application with a single XML file for config.  Designed for c
 
 ##Download binary
 
-<a href="http://itinsurrey.co.uk/assets/files/S3Archive.zip">Download S3Archive</a>
+<a href="http://itinsurrey.co.uk/blog/2013/04/02/simple-archiving-to-s3-for-log-files.htm?utm_source=github&utm_medium=download&utm_campaign=S3Archive">Download S3Archive</a>
 
 Extract to a folder somewhere and follow instructions.
 
